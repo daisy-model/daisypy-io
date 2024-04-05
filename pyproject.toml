@@ -42,7 +42,7 @@ readme = { file = "README.md" }
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["daisypy"]
+include = ["daisypy.io"]
 namespaces = true
 
 [tool.pylint.messages_control] 
