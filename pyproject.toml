@@ -1,0 +1,58 @@
+[build-system]
+requires = [
+    "setuptools"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "daisypy-io"
+authors = [
+  { name="Silas Nyboe Ørting", email="silas@di.ku.dk" },
+]
+description = "IO library for Daisy"
+requires-python = ">=3.11"
+classifiers = [
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3"
+]
+dependencies = [
+    "pandas",
+ ]
+version = "0.0.0"
+dynamic = ["readme"]#, "version"]
+
+[project.urls]
+Homepage = "https://daisy.ku.dk/"
+
+[project.optional-dependencies]
+test =[
+     "pytest",
+]
+lint = [
+     "pylint",
+     "pytest",
+]
+all = [
+    "pytest",
+    "pylint"
+]
+
+[tool.setuptools.dynamic]
+readme = { file = "README.md" }
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["daisypy"]
+namespaces = true
+
+[tool.pylint.messages_control] 
+disable = [
+    'trailing-whitespace',
+    'trailing-newlines',
+ ]
+
+[tool.pytest.ini_options]
+testpaths = [ "daisypy" ]
+filterwarnings = [
+    "error",
+]
