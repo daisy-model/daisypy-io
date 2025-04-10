@@ -27,7 +27,7 @@ def read_dlf(path):
     Dlf object
     '''
     header_body_sep = '--------------------'
-    with open(path, encoding='utf-8') as infile:
+    with open(path, encoding='locale') as infile:
         header = {}
         for row in infile:
             if row.startswith(header_body_sep):
