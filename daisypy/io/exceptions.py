@@ -1,0 +1,2 @@
+class DaiException(Exception):
+    pass
