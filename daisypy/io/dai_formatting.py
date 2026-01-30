@@ -1,8 +1,12 @@
 import textwrap
-from .dai_transformer import Definition
+from .dai_transformer import Definition, Path
+
 
 def format_dai(dai, max_len=100, indent=0, top_level=True):
     indent_str = " " * indent
+
+    if isinstance(dai, Path):
+        dai = ['path'] + dai.values
 
     if isinstance(dai, Definition):
         def_part, body_part = dai.value

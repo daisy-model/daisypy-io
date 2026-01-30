@@ -1,5 +1,8 @@
 ;; sample.dai --- This is a small setup using the sample files.
 ;; Get out sample management, irrigation, and soil.
+(path "path/" &old "more/path")
+(ui none)
+(directory "dir/path")
 (input file "fertilizer.dai")
 (input file "tillage.dai")
 (input file "crop.dai")

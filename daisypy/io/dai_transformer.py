@@ -17,6 +17,18 @@ class DaiTransformer(Transformer):
     def run(self, tokens):
         return Run(tokens[0])
 
+    def ui(self, tokens):
+        return Ui(tokens[0])
+
+    def old(self, tokens):
+        return Old()
+
+    def directory(self, tokens):
+        return Directory(tokens[0])
+
+    def path(self, tokens):
+        return Path(tokens)
+
     def comment(self, tokens):
         return Comment(tokens[0].value.lstrip('; '))
 
@@ -103,3 +115,31 @@ class Run:
         return f'Run({self.value})'
     def __str__(self):
         return f'(run {self.value})'
+
+class Ui:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Ui({self.value})'
+    def __str__(self):
+        return f'(ui {self.value})'
+
+class Directory:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Directory({self.value})'
+    def __str__(self):
+        return f'(directory {self.value})'
+
+class Path:
+    def __init__(self, values):
+        self.values = values
+    def __repr__(self):
+        return f'Path({", ".join(self.values)})'
+
+class Old:
+    def __repr__(self):
+        return f'Old()'
+    def __str__(self):
+        return f'&old'
