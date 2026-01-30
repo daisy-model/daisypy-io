@@ -1,7 +1,19 @@
 import textwrap
+from .dai_transformer import Definition
 
-def format_dai(dai, max_len=80, indent=0, top_level=True):
+def format_dai(dai, max_len=100, indent=0, top_level=True):
     indent_str = " " * indent
+
+    if isinstance(dai, Definition):
+        def_part, body_part = dai.value
+        def_part = format_dai(def_part, max_len-1, indent, top_level)
+        body_part = format_dai(body_part, max_len, 0, False)[1:-1]
+        # Instead of always adding a newline before body, we could try to fit verything on a single
+        # line.
+        # if len(def_part) + len(body_part) + 2 <= max_len:
+        #     return "(" + def_part + " " + body_part + ")"
+        indent_str = " " * (indent + 2)
+        return "(" + def_part + "\n" + indent_str + body_part + ")"
 
     # Case 1: dai is not a list and can be converted directly to a string
     if not isinstance(dai, list):
@@ -13,7 +25,7 @@ def format_dai(dai, max_len=80, indent=0, top_level=True):
             subsequent_indent=indent_str
         )
 
-    # Case 2: dai is a list 
+    # Case 2: dai is a list
     # Format children without indentation for flat-fit testing
     flat_items = [format_dai(v, max_len, 0, False).strip() for v in dai]
 

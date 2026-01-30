@@ -5,6 +5,18 @@ These clases all have a __str__ that formats their value.
 from lark import Transformer
 
 class DaiTransformer(Transformer):
+    def definition(self, tokens):
+        return Definition(*tokens)
+
+    def definition_body(self, tokens):
+        return tokens
+
+    def input(self, tokens):
+        return Input(tokens[0])
+
+    def run(self, tokens):
+        return Run(tokens[0])
+
     def comment(self, tokens):
         return Comment(tokens[0].value.lstrip('; '))
 
@@ -34,12 +46,12 @@ class DaiTransformer(Transformer):
 
 class Comment:
     def __init__(self, value):
-        self.value = value        
+        self.value = value
     def __repr__(self):
         return f'Comment({self.value})'
     def __str__(self):
         return f';; {self.value}'
-        
+
 class Identifier:
     def __init__(self, value):
         self.value = value
@@ -55,7 +67,7 @@ class QuotedString:
         return f'QuotedString({self.value})'
     def __str__(self):
         return f'"{self.value}"'
-    
+
 class Units:
     def __init__(self, value):
         self.value = value
@@ -63,3 +75,31 @@ class Units:
         return f'Units({self.value})'
     def __str__(self):
         return f'[{self.value}]'
+
+class Input:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Input({self.value})'
+    def __str__(self):
+        return f'(input file {self.value})'
+
+class Definition:
+    def __init__(self, component, name, parent, body):
+        self.component = component
+        self.name = name
+        self.parent = parent
+        self.body = body
+    @property
+    def value(self):
+        return [f'def{self.component} {self.name} {self.parent}', self.body]
+    def __repr__(self):
+        return f'Definition({self.component}, {self.name}, {self.parent}, {self.body})'
+
+class Run:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Run({self.value})'
+    def __str__(self):
+        return f'(run {self.value})'
