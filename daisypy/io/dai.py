@@ -1,48 +1,112 @@
-from pathlib import Path
-from lark import Lark
-from .dai_grammar import dai_grammar
-from .dai_transformer import DaiTransformer
-from .dai_formatting import format_dai
-from .exceptions import DaiException
+'''Data types for dai files'''
 
-__all__ = [
-    'parse_dai',
-    'transform_dai',
-    'format_dai',
-    'read_dai',
-    'write_dai',
-    'DaiException'
-]
+class Dai:
+    def __init__(self, values):
+        self.values = values
+    def __repr__(self):
+        return f'Dai({", ".join(repr(v) for v in self.values)})'
+    def __str__(self):
+        return '\n'.join((str(v) for v in self.values))
 
-dai_parser = Lark(dai_grammar, start="dai")
-dai_transformer = DaiTransformer()
+class Comment:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Comment({repr(self.value)})'
+    def __str__(self):
+        return f';; {self.value}'
 
-def parse_dai(text):
-    return dai_parser.parse(text)
+class Identifier:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Identifier({repr(self.value)})'
+    def __str__(self):
+        return self.value
 
-def transform_dai(parse_tree):
-    return dai_transformer.transform(parse_tree)
+class QuotedString:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'QuotedString({repr(self.value)})'
+    def __str__(self):
+        return f'"{self.value}"'
 
-def read_dai(path):
-    path = Path(path)
-    text = path.read_text()
-    try:
-        parsed = parse_dai(text)
-        return transform_dai(parsed)
-    except UnexpectedInput:
-        raise DaiException("Parse error")
-    except VisitError:
-        raise DaiException("Transformation error")
+class Units:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Units({repr(self.value)})'
+    def __str__(self):
+        return f'[{self.value}]'
 
-def write_dai(dai, out_path):
-    out_path = Path(out_path)
-    out_path.write_text(format_dai(dai))
+class Input:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Input({repr(self.value)})'
+    def __str__(self):
+        return f'(input file {self.value})'
 
-if __name__ == '__main__':
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('inpath')
-    args = parser.parse_args()
-    dai = read_dai(args.inpath)
-    formatted = format_dai(dai)
-    print(formatted)
+class Definition:
+    def __init__(self, component, name, parent, body):
+        self.component = component
+        self.name = name
+        self.parent = parent
+        self.body = body
+    @property
+    def value(self):
+        return [f'def{self.component} {self.name} {self.parent}', self.body]
+    def __repr__(self):
+        return f'Definition({repr(self.component)}, {repr(self.name)}, {repr(self.parent)}, {repr(self.body)})'
+
+class Run:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Run({repr(self.value)})'
+    def __str__(self):
+        return f'(run {self.value})'
+
+class Ui:
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return f'Ui({repr(self.value)})'
+    def __str__(self):
+        return f'(ui {self.value})'
+
+class Directory:
+    def __init__(self, value):
+        if not isinstance(value, QuotedString):
+            self.value = QuotedString(str(value))
+        else:
+            self.value = value
+    def __repr__(self):
+        return f'Directory({repr(self.value)})'
+    def __str__(self):
+        return f'(directory {self.value})'
+
+class Path:
+    def __init__(self, values):
+        self.values = [
+            v if isinstance(v, QuotedString) or isinstance(v, Old)
+            else QuotedString(str(v)) for v in values
+        ]
+    def __repr__(self):
+        return f'Path({", ".join((repr(v) for v in self.values))})'
+    def __str__(self):
+        return f'(path {", ".join((str(v) for v in self.values))})'
+
+class Old:
+    def __repr__(self):
+        return 'Old()'
+    def __str__(self):
+        return '&old'
+
+
+def get_run(dai):
+    for cmd in dai:
+        if isinstance(cmd, Run):
+            return cmd
+    return None

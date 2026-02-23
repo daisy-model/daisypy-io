@@ -1,3 +1,3 @@
 '''Module for daisy file IO'''
 from daisypy.io.dlf import *
-from daisypy.io.dai import *
+from daisypy.io.dai_util import read_dai, write_dai

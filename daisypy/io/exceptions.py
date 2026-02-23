@@ -1,2 +1,4 @@
+'''Exceptions for daisypy.io'''
+
 class DaiException(Exception):
-    pass
+    '''Exception class for Dai related errors'''

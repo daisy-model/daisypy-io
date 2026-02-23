@@ -17,6 +17,7 @@ classifiers = [
 ]
 dependencies = [
     "pandas",
+    "lark"
  ]
 version = "0.0.0"
 dynamic = ["readme"]#, "version"]

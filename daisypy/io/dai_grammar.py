@@ -1,7 +1,7 @@
 '''This is a very loose grammar that allows parsing dai files that are not actually valid.
 Validation has to be performed after parsing'''
 
-dai_grammar = '''
+DAI_GRAMMAR = '''
 dai: top+
 
 ?top: known_cmd | sequence | comment

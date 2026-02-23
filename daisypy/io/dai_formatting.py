@@ -1,9 +1,27 @@
+'''Formatting of Dai classes'''
 import textwrap
-from .dai_transformer import Definition, Path
-
+from .dai_transformer import Definition, Path, Dai
 
 def format_dai(dai, max_len=100, indent=0, top_level=True):
+    '''Format Dai objects using a string representation that can be used as input file for Daisy.
+
+    dai: One of the Dai objects from daispy.io.dai
+
+    max_len: int
+      Maximum line length
+
+    indent: int
+      Indentation level
+
+    top_level: bool
+      If True indentation rules are adapted for top level
+
+    Returns: str
+    '''
     indent_str = " " * indent
+
+    if isinstance(dai, Dai):
+        dai = dai.values
 
     if isinstance(dai, Path):
         dai = ['path'] + dai.values
