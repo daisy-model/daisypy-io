@@ -110,7 +110,7 @@ class Placeholder:
     def __repr__(self):
         return f'Placeholder({repr(self.value)})'
     def __str__(self):
-        return f'{{ {self.value} }}'
+        return f'{{{self.value}}}'
 
 def get_run(dai):
     for cmd in dai:
