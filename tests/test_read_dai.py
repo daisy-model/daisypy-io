@@ -12,4 +12,4 @@ def test_read_dai():
         formatted = format_dai(dai)
         n_tests_run += 1
         assert expected == formatted
-    assert n_tests_run == 2
+    assert n_tests_run == 3
