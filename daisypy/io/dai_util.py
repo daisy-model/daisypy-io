@@ -8,30 +8,20 @@ from .dai_grammar import DAI_GRAMMAR
 from .exceptions import DaiException
 
 dai_parser = Lark(DAI_GRAMMAR, start="dai")
+dai_transformer = DaiTransformer()
 
 def parse_dai(text):
     '''Parse a Dai object from text
 
     Returns
     -------
-    A Dai object'''
-    try:
-        return dai_parser.parse(text)
-    except UnexpectedInput as e:
-        raise DaiException("Parse error") from e
-
-
-dai_transformer = DaiTransformer()
-
-def transform_dai(parse_tree):
-    '''Transform a Dai object to a string
-
-    Returns
-    -------
-    str
+    Dai object
     '''
     try:
+        parse_tree = dai_parser.parse(text)
         return dai_transformer.transform(parse_tree)
+    except UnexpectedInput as e:
+        raise DaiException("Parse error") from e
     except VisitError as e:
         raise DaiException("Transformation error") from e
 
@@ -44,8 +34,7 @@ def read_dai(path):
     '''
     path = Path(path)
     text = path.read_text(encoding='utf-8')
-    parsed = parse_dai(text)
-    return transform_dai(parsed)
+    return parse_dai(text)
 
 def write_dai(dai, out_path):
     '''Write a Dai object to a .dai file that can be read by Daisy'''
