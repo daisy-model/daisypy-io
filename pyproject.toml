@@ -1,6 +1,7 @@
 [build-system]
 requires = [
-    "setuptools"
+    "setuptools>=60"
+    "setuptools-scm>=8.0"
 ]
 build-backend = "setuptools.build_meta"
 
@@ -19,8 +20,8 @@ dependencies = [
     "pandas",
     "lark"
  ]
-version = "0.0.0"
-dynamic = ["readme"]#, "version"]
+dynamic = ["version"]
+readme = "README.md"
 
 [project.urls]
 Homepage = "https://daisy.ku.dk/"
@@ -38,22 +39,24 @@ all = [
     "pylint"
 ]
 
-[tool.setuptools.dynamic]
-readme = { file = "README.md" }
-
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["daisypy.io"]
 namespaces = true
+
+[tool.setuptools_scm]
+version_file = "daisypy/optim/_version.py"
 
 [tool.pylint.messages_control] 
 disable = [
     'trailing-whitespace',
     'trailing-newlines',
  ]
+ignore = [
+     '_version.py',
+]
 
 [tool.pytest.ini_options]
-testpaths = [ "daisypy" ]
 filterwarnings = [
     "error",
 ]
