@@ -1,6 +1,6 @@
 [build-system]
 requires = [
-    "setuptools>=60"
+    "setuptools>=60",
     "setuptools-scm>=8.0"
 ]
 build-backend = "setuptools.build_meta"
@@ -45,7 +45,7 @@ include = ["daisypy.io"]
 namespaces = true
 
 [tool.setuptools_scm]
-version_file = "daisypy/optim/_version.py"
+version_file = "daisypy/io/_version.py"
 
 [tool.pylint.messages_control] 
 disable = [
