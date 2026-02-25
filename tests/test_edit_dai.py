@@ -2,7 +2,7 @@ from pathlib import Path
 from daisypy.io.dai_util import read_dai, format_dai
 from daisypy.io.dai import Definition, Identifier, QuotedString, Comment
 
-def test_format_dai_def():
+def test_edit_dai_def():
     expected_path = Path(__file__).parent / 'test-data' / 'valid-dai-files' / 'test-spawn1.dai'
     expected = format_dai(read_dai(expected_path))
 

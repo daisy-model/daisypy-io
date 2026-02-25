@@ -4,7 +4,8 @@ These clases all have a __str__ that formats their value.
 '''
 from lark import Transformer
 from .dai import (
-    Dai, Run, Ui, Path, Old, Directory, Definition, Input, Units, QuotedString, Identifier, Comment
+    Dai, Run, Ui, Path, Old, Directory, Definition, Input, Units, QuotedString, Identifier, Comment,
+    Placeholder
 )
 
 class DaiTransformer(Transformer):
@@ -53,6 +54,9 @@ class DaiTransformer(Transformer):
 
     def bool(self, tokens):
         return tokens[0].value == 'true'
+
+    def placeholder(self, tokens):
+        return Placeholder(tokens[0])
 
     def sequence(self, tokens):
         return tokens
