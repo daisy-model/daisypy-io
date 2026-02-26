@@ -1,6 +1,6 @@
 '''Formatting of Dai classes'''
 import textwrap
-from .dai_transformer import Definition, Path, Dai
+from .dai_transformer import Definition, Path, Dai, Comment
 
 def format_dai(dai, max_len=100, indent=0, top_level=True):
     '''Format Dai objects using a string representation that can be used as input file for Daisy.
@@ -39,6 +39,9 @@ def format_dai(dai, max_len=100, indent=0, top_level=True):
 
     # Case 1: dai is not a list and can be converted directly to a string
     if not isinstance(dai, list):
+        if isinstance(dai, Comment):
+            # No wrapping when we have a comment
+            return f'{indent_str}{dai}'
         dai = str(dai)
         return textwrap.fill(
             dai,
@@ -48,6 +51,7 @@ def format_dai(dai, max_len=100, indent=0, top_level=True):
         )
 
     # Case 2: dai is a list
+    # TODO: Handle comments so we dont accidentally comments out the following line
     # Format children without indentation for flat-fit testing
     flat_items = [format_dai(v, max_len, 0, False).strip() for v in dai]
 
@@ -83,4 +87,4 @@ def format_dai(dai, max_len=100, indent=0, top_level=True):
     # Closing parenthesis attaches to last line
     lines[-1] = lines[-1] + ")"
 
-    return "\n".join(lines)
+    return "\n".join(lines).strip()
