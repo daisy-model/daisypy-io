@@ -1,3 +1,4 @@
+# pylint: disable=missing-module-docstring,missing-function-docstring, R0801
 from pathlib import Path
 from daisypy.io.dai_util import read_dai, format_dai
 from daisypy.io.dai import Definition, Identifier, QuotedString, Comment

@@ -51,15 +51,3 @@ def write_dai(dai, out_path):
     '''Write a Dai object to a .dai file that can be read by Daisy'''
     out_path = Path(out_path)
     out_path.write_text(format_dai(dai), encoding='utf-8')
-
-def main(inpath):
-    dai = read_dai(inpath)
-    formatted = format_dai(dai)
-    print(formatted)
-
-if __name__ == '__main__':
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('inpath')
-    args = parser.parse_args()
-    main(args.inpath)

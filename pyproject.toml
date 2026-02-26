@@ -54,6 +54,7 @@ disable = [
  ]
 ignore = [
      '_version.py',
+     'build',
 ]
 
 [tool.pytest.ini_options]
