@@ -1,3 +1,4 @@
+# pylint: disable=missing-class-docstring
 '''Data types for dai files'''
 
 class Dai:
@@ -56,9 +57,11 @@ class Definition:
         self.body = body
     @property
     def value(self):
+        # pylint: disable=missing-function-docstring
         return [f'def{self.component} {self.name} {self.parent}', self.body]
     def __repr__(self):
-        return f'Definition({repr(self.component)}, {repr(self.name)}, {repr(self.parent)}, {repr(self.body)})'
+        return f'Definition({repr(self.component)}, {repr(self.name)}, {repr(self.parent)}, ' \
+            f'{repr(self.body)})'
 
 class Run:
     def __init__(self, value):
@@ -90,7 +93,7 @@ class Directory:
 class Path:
     def __init__(self, values):
         self.values = [
-            v if isinstance(v, QuotedString) or isinstance(v, Old)
+            v if isinstance(v, (QuotedString, Old))
             else QuotedString(str(v)) for v in values
         ]
     def __repr__(self):
@@ -111,9 +114,3 @@ class Placeholder:
         return f'Placeholder({repr(self.value)})'
     def __str__(self):
         return f'{{{self.value}}}'
-
-def get_run(dai):
-    for cmd in dai:
-        if isinstance(cmd, Run):
-            return cmd
-    return None

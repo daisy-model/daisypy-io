@@ -1,3 +1,4 @@
+# pylint: disable=missing-module-docstring,missing-function-docstring
 from pathlib import Path
 import pytest
 from daisypy.io.dai_util import read_dai, format_dai
