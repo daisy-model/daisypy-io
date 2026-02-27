@@ -8,7 +8,7 @@
 (input file "dk-management.dai")
 (input file "log-std.dai")
 (defprogram Base Daisy
-  "This is the stuff all scenrios have in common."
+  "This is the stuff all scenarios have in common."
   (time 1978 1 1)
   (stop 2000 1 1)
   (activate_output (after 1980 1 1))
@@ -66,23 +66,23 @@
 ;; Now, run them all.
 (defprogram all spawn1
   (program
-   N-A-S
-   N-A-W
-   N-A-P
-   N-J-S
-   N-J-W
-   N-J-P
-   N-F-S
-   N-F-W
-   N-F-P
-   W-A-S
-   W-A-W
-   W-A-P
-   W-J-S
-   W-J-W
-   W-J-P
-   W-F-S
-   W-F-W
-   W-F-P))
+  N-A-S
+  N-A-W
+  N-A-P
+  N-J-S
+  N-J-W
+  N-J-P
+  N-F-S
+  N-F-W
+  N-F-P
+  W-A-S
+  W-A-W
+  W-A-P
+  W-J-S
+  W-J-W
+  W-J-P
+  W-F-S
+  W-F-W
+  W-F-P))
 (run all)
 ;; test-spawn.dai ends her.
