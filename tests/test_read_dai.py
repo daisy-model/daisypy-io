@@ -29,5 +29,5 @@ def test_read_extended():
         dai = read_dai(in_path, extended=True)
         formatted = format_dai(dai)
         n_tests_run += 1
-        assert expected == formatted
+        assert formatted == expected
     assert n_tests_run == 1

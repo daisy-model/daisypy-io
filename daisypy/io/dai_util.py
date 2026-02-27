@@ -1,7 +1,8 @@
 '''Utilities for working with dai files and Dai objects'''
-from pathlib import Path
+import pathlib
 from lark import Lark
 from lark.exceptions import UnexpectedInput, VisitError
+from .dai import Dai, Definition, Path
 from .dai_transformer import DaiTransformer
 from .dai_formatting import format_dai
 from .dai_grammar import DAI_GRAMMAR, DAI_GRAMMAR_EXTENDED
@@ -43,11 +44,30 @@ def read_dai(path, extended=False):
     -------
     A Dai object
     '''
-    path = Path(path)
+    path = pathlib.Path(path)
     text = path.read_text(encoding='utf-8')
     return parse_dai(text, extended)
 
 def write_dai(dai, out_path):
     '''Write a Dai object to a .dai file that can be read by Daisy'''
-    out_path = Path(out_path)
+    out_path = pathlib.Path(out_path)
     out_path.write_text(format_dai(dai), encoding='utf-8')
+
+def filter_dai(dai, predicate):
+    '''Drop all parts of Dai object that do not satisfy a predicate'''
+    assert isinstance(dai, Dai)
+    return Dai([_filter_dai(value, predicate) for value in dai.values if predicate(value)])
+
+def _filter_dai(dai, predicate):
+    # We need to handle definition and path because they have nested components
+    # the rest are just returned as is
+    if isinstance(dai, Definition):
+        return Definition(
+            dai.component,
+            dai.name,
+            dai.parent,
+            [_filter_dai(value, predicate) for value in dai.body if predicate(value)]
+        )
+    if isinstance(dai, Path):
+        return Path([value for value in dai.values if predicate(value)])
+    return dai
