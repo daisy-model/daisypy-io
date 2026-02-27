@@ -68,20 +68,25 @@ def format_dai(dai, max_len=100, indent=0, top_level=True):
         # Everything on new line, no indentation
         return '\n'.join(items)
 
-    nested_items = [ format_dai(v, max_len, indent+2, False) for v in dai ]
     comments = [ isinstance(v, Comment) for v in dai ]
+    rows = _split_at(items, comments, max_len)
+    # Indent all rows except the first
+    nested_indent_str = (indent + 2) * ' '
+    rows = [nested_indent_str + row if i > 0 else row for i, row in enumerate(rows)]
+    return indent_str + "(" + "\n".join(rows) + ")"
+
+def _split_at(items, mask, max_len):
     rows = []
     i = 0
-    nested_indent = (indent + 2) * ' '
-    for j, is_comment in enumerate(comments):
-        if is_comment:
+    for j, split in enumerate(mask):
+        if split:
             # Try flat row
             row = " ".join(items[i:j])
             if len(row) <= max_len:
                 rows.append(row)
             else:
                 # Everything on new line
-                rows += [items[i]] + [item for item in items[i+1:j]]
+                rows += items[i:j]
             rows.append(items[j])
             i = j+1
     if i < len(items):
@@ -91,7 +96,5 @@ def format_dai(dai, max_len=100, indent=0, top_level=True):
             rows.append(row)
         else:
             # Everything on new line
-            rows += [items[i]] + [item for item in items[i+1:]]
-    # Indent all rows except the first
-    rows = [nested_indent + row if i > 0 else row for i, row in enumerate(rows)]
-    return indent_str + "(" + "\n".join(rows) + ")"
+            rows += items[i:]
+    return rows
