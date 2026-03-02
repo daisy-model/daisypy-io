@@ -34,15 +34,14 @@ sequence: "(" sequence_val+ ")"
 old: "&old"
 
 bool: /true|false/
-integer.1: /0|[1-9][0-9]*/
-number: SIGNED_NUMBER
+integer.1: /[0-9]+/
+number: /-?[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?/
 identifier: /[a-zA-Z][a-zA-Z0-9=<>_+*\\/-]*/
 quoted_string : ESCAPED_STRING
 units: /\\[[^\\]]*\\]/
 comment: /;.*/
 
 %import common.ESCAPED_STRING
-%import common.SIGNED_NUMBER
 %import common.WS
 %ignore WS
 '''
@@ -83,8 +82,8 @@ placeholder: "{" placeholder_name "}"
 old: "&old"
 
 bool: /true|false/
-integer.1: /0|[1-9][0-9]*/
-number: SIGNED_NUMBER
+integer.1: /[0-9]+/
+number: /-?[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?/
 identifier: /[a-zA-Z][a-zA-Z0-9=<>_+*\\/-]*/
 quoted_string : ESCAPED_STRING
 units: /\\[[^\\]]*\\]/
