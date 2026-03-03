@@ -1,0 +1,19 @@
+(defhorizon "Ap_Surface" ISSS4
+  (clay 0.051 []) (silt 0.026 []) (fine_sand 0.399 []) (coarse_sand 0.509 []) (humus 0.015 [])
+  ;; texture data is from profile 1
+  (dry_bulk_density 1.48 [g/cm^3])
+  (root_homogeneity 1)
+  (C_per_N 11.6)
+  (hydraulic
+  hyprop
+  (alpha 0.0416 0.0208 [cm^-1])
+  (n 10.456 1.403)
+  (Theta_res 0.091)
+  (Theta_sat 0.41)
+  (h0 6.8 [pF])
+  (w 0.476 0.524)
+  (K_sat 42.3 [cm/d])
+  (tau 7.0)
+  (omega 0.001)
+  (a -1.5))
+  (Nitrification original (N2O_fraction 0.3 [%])))
