@@ -34,7 +34,7 @@ sequence: "(" sequence_val+ ")"
 old: "&old"
 
 bool: /true|false/
-integer.1: /[0-9]+/
+integer.1: /-?[0-9]+/
 number: /-?[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?/
 identifier: /[a-zA-Z][a-zA-Z0-9=<>_+*\\/-]*/
 quoted_string : ESCAPED_STRING
@@ -82,7 +82,7 @@ placeholder: "{" placeholder_name "}"
 old: "&old"
 
 bool: /true|false/
-integer.1: /[0-9]+/
+integer.1: /-?[0-9]+/
 number: /-?[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?/
 identifier: /[a-zA-Z][a-zA-Z0-9=<>_+*\\/-]*/
 quoted_string : ESCAPED_STRING
