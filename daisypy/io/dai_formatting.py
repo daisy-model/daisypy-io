@@ -3,6 +3,7 @@ import textwrap
 from .dai_transformer import Definition, Path, Dai, Comment, Directory, Input, QuotedString, Run, Ui
 
 def format_dai(dai, max_len=100, indent=0, top_level=True):
+    # pylint: disable=too-many-return-statements
     '''Format Dai objects using a string representation that can be used as input file for Daisy.
 
     Parameters
