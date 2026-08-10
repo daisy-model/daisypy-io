@@ -45,3 +45,15 @@ def test_format_interleaved_comments():
     ])
     formatted = format_dai(dai)
     assert formatted == ';; c1\n(input file p1)\n;; c2\n(input file p2)\n;; c3'
+
+def test_format_long_input_filename():
+    long_path = '/some/really/long/path-name/that/keeps/going/for/a/while/and/file.dai'
+    dai = Dai([Input(QuotedString(long_path))])
+
+    formatted = format_dai(dai, max_len=40)
+
+    assert formatted == (
+        '(input\n'
+        '  file\n'
+        f'  "{long_path}")'
+    )

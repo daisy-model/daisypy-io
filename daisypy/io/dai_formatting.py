@@ -1,8 +1,9 @@
 '''Formatting of Dai classes'''
 import textwrap
-from .dai_transformer import Definition, Path, Dai, Comment
+from .dai import Definition, Path, Dai, Comment, Directory, Input, QuotedString, Run, Ui
 
 def format_dai(dai, max_len=100, indent=0, top_level=True):
+    # pylint: disable=too-many-return-statements
     '''Format Dai objects using a string representation that can be used as input file for Daisy.
 
     Parameters
@@ -41,9 +42,23 @@ def format_dai(dai, max_len=100, indent=0, top_level=True):
         indent_str = " " * (indent + 2)
         return "(" + def_part + "\n" + indent_str + body_part + ")"
 
+    if isinstance(dai, Input):
+        return _format_command(['input', 'file', dai.value], max_len, indent)
+
+    if isinstance(dai, Directory):
+        return _format_command(['directory', dai.value], max_len, indent)
+
+    if isinstance(dai, Run):
+        return _format_command(['run', dai.value], max_len, indent)
+
+    if isinstance(dai, Ui):
+        return _format_command(['ui', dai.value], max_len, indent)
+
     # Case 1: dai is not a list and can be converted directly to a string
     if not isinstance(dai, list):
         text = str(dai)
+        if isinstance(dai, QuotedString):
+            return indent_str + text
         if isinstance(dai, Comment):
             wrapped = textwrap.fill(
                 text,
@@ -74,6 +89,9 @@ def format_dai(dai, max_len=100, indent=0, top_level=True):
     nested_indent_str = (indent + 2) * ' '
     rows = [nested_indent_str + row if i > 0 else row for i, row in enumerate(rows)]
     return indent_str + "(" + "\n".join(rows) + ")"
+
+def _format_command(items, max_len, indent):
+    return format_dai(items, max_len, indent, False)
 
 def _split_at(items, mask, max_len):
     rows = []
