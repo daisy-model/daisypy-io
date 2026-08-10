@@ -1,6 +1,6 @@
 '''Formatting of Dai classes'''
 import textwrap
-from .dai_transformer import Definition, Path, Dai, Comment, Directory, Input, QuotedString, Run, Ui
+from .dai import Definition, Path, Dai, Comment, Directory, Input, QuotedString, Run, Ui
 
 def format_dai(dai, max_len=100, indent=0, top_level=True):
     # pylint: disable=too-many-return-statements
