@@ -55,3 +55,15 @@ def test_parse_mixed_number_list():
         ):
             assert isinstance(n, expected_type)
             assert n == expected_val
+
+def test_trailing_comment_does_not_capture_closing_paren():
+    text = '''(LeafPhot original
+      (Fm    3.50 [g CO2/m^2/h])
+      (Qeff   0.040 [(g CO2/m^2/h)/(W/m^2)]);
+      )'''
+    expected = '''(LeafPhot original (Fm 3.5 [g CO2/m^2/h]) (Qeff 0.04 [(g CO2/m^2/h)/(W/m^2)])
+  ;; 
+)'''
+    for extended in False, True:
+        parsed = parse_dai(text, extended=extended)
+        assert format_dai(parsed) == expected
