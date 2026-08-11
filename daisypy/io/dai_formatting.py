@@ -88,7 +88,8 @@ def format_dai(dai, max_len=100, indent=0, top_level=True):
     # Indent all rows except the first
     nested_indent_str = (indent + 2) * ' '
     rows = [nested_indent_str + row if i > 0 else row for i, row in enumerate(rows)]
-    return indent_str + "(" + "\n".join(rows) + ")"
+    close = "\n" + indent_str + ")" if dai and isinstance(dai[-1], Comment) else ")"
+    return indent_str + "(" + "\n".join(rows) + close
 
 def _format_command(items, max_len, indent):
     return format_dai(items, max_len, indent, False)
