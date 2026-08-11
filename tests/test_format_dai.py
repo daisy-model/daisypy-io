@@ -1,5 +1,5 @@
 # pylint: disable=missing-module-docstring,missing-function-docstring
-from daisypy.io.dai_util import format_dai
+from daisypy.io.dai_util import format_dai, parse_dai
 from daisypy.io.dai import Definition, Identifier, QuotedString, Comment, Dai, Input
 
 def test_format_dai_def():
@@ -57,3 +57,27 @@ def test_format_long_input_filename():
         '  file\n'
         f'  "{long_path}")'
     )
+
+def test_trailing_comment_does_not_capture_closing_paren():
+    text = '''(LeafPhot original
+      (Fm    3.50 [g CO2/m^2/h])
+      (Qeff   0.040 [(g CO2/m^2/h)/(W/m^2)]);
+      )'''
+    expected = '''(LeafPhot original (Fm 3.5 [g CO2/m^2/h]) (Qeff 0.04 [(g CO2/m^2/h)/(W/m^2)])
+  ;; 
+)'''
+    for extended in False, True:
+        parsed = parse_dai(text, extended=extended)
+        assert format_dai(parsed) == expected
+
+def test_trailing_comment_does_not_capture_closing_paren_2():
+    text = '''(LeafPhot original
+      (Fm    3.50 [g CO2/m^2/h])
+      (Qeff   0.040 [(g CO2/m^2/h)/(W/m^2)]); Non-empty trailing comment
+      )'''
+    expected = '''(LeafPhot original (Fm 3.5 [g CO2/m^2/h]) (Qeff 0.04 [(g CO2/m^2/h)/(W/m^2)])
+  ;; Non-empty trailing comment
+)'''
+    for extended in False, True:
+        parsed = parse_dai(text, extended=extended)
+        assert format_dai(parsed) == expected
