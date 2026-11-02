@@ -16,7 +16,7 @@ def test_read_dai():
             formatted = format_dai(dai)
             assert formatted == expected
         n_tests_run += 1
-    assert n_tests_run == 4
+    assert n_tests_run == 5
 
 def test_read_extended():
     in_dir = Path(__file__).parent / 'test-data' / 'extended-grammar-files'
