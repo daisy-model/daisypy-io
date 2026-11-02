@@ -1,0 +1,9 @@
+(defcolumn Hadsten_P000 Hadsten_common
+  "Georeferenced soil column, profile_000_lat56.3128_lon10.0957.csv,
+   Hadsten smartfield site.  Matched sensor(s): T54-01376 (7.6 m)."
+  (Soil (horizons (-10 [cm] Ap1_P000) (-25 [cm] Ap2_P000) (-60 [cm] Bt_P000) (-2 [m] C_P000)))
+  ;; Initial water content from sensor T54-01376 (matched to profile_000),
+  
+  ;; reading at simulation start (2026-01-01 00:00).
+  (SoilWater
+  (initial_Theta (-15 [cm] 0.23 []) (-30 [cm] 0.332 []) (-45 [cm] 0.316 []) (-60 [cm] 0.266 []))))

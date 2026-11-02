@@ -37,11 +37,11 @@ bool: /true|false/
 integer.1: /-?[0-9]+/
 number: /-?[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?/
 identifier: /[a-zA-Z][a-zA-Z0-9=<>_+*\\/-]*/
-quoted_string : ESCAPED_STRING
+quoted_string : QUOTED_STRING
 units: /\\[[^\\]]*\\]/
 comment: /;.*/
 
-%import common.ESCAPED_STRING
+QUOTED_STRING: /"([^"\\\\]|\\\\.)*"/s
 %import common.WS
 %ignore WS
 '''
@@ -85,11 +85,11 @@ bool: /true|false/
 integer.1: /-?[0-9]+/
 number: /-?[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?/
 identifier: /[a-zA-Z][a-zA-Z0-9=<>_+*\\/-]*/
-quoted_string : ESCAPED_STRING
+quoted_string : QUOTED_STRING
 units: /\\[[^\\]]*\\]/
 comment: /;.*/
 
-%import common.ESCAPED_STRING
+QUOTED_STRING: /"([^"\\\\]|\\\\.)*"/s
 %import common.SIGNED_NUMBER
 %import common.WS
 %ignore WS
