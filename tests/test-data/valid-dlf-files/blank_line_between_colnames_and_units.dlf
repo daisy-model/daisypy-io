@@ -1,0 +1,22 @@
+dlf-0.0 -- Sample water content (defined in 'hadsten-log.dai').
+
+VERSION: 7.1.12
+LOGFILE: interval_water_content.dlf
+RUN: Mon Nov  2 15:54:59 2026
+
+COLUMN: *
+INTERVAL: box none
+
+LOG: Average water content in two intervals.
+LOG: This could be used for comparison with, say, TDR probes.
+
+SIMFILE: hadsten_profile_000.dai
+SIM: Defaults shared by all Hadsten smartfield profile runs.  Profile-specific
+SIM:    programs extend this and only need to specify (column ...) and
+SIM:    (output ...).
+
+--------------------
+year	month	mday	hour	Theta @ -15	Theta @ -30	Theta @ -45	Theta @ -60
+    
+				%	%	%	%
+2026	1	1	1	23	32.3273	30.35	26.6

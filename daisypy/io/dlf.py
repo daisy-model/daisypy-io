@@ -53,7 +53,10 @@ def read_dlf(path):
                         header[k] = v
         try:
             csv_header = next(infile).strip('\n').split('\t')
-            units = dict(zip(csv_header, next(infile).strip('\n').split('\t')))
+            units_row = next(infile)
+            while not units_row.strip():
+                units_row = next(infile)
+            units = dict(zip(csv_header, units_row.strip('\n').split('\t')))
             body = pd.read_csv(infile, sep='\t', names=csv_header)
         except StopIteration:
             units = {}
